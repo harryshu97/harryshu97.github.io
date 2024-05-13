@@ -1,5 +1,5 @@
 layout: sidebar
-style: light
+style: dark
 
 plugins:
   - jekyll-octicons
@@ -33,9 +33,9 @@ projects:
   # dribbble: your_username
   # facebook: your_username
   # hackerrank: your_username
-  # instagram: your_username
+  instagram: zhihao701
   # keybase: your_username
-  # linkedin: your_username
+  linkedin: zhihao-shu-07b1361a2
   # mastodon: your_username
   # medium: your_username
   # stackoverflow: your_user_id
@@ -44,15 +44,17 @@ projects:
   # unsplash: your_username
   # vk: your_username
   # website: http://your_website_url
-  # youtube: your_username
+  youtube: HarryShu1997
 
 topics:
-  - name: CSS
-    web_url: https://github.com/topics/css
-    image_url: https://raw.githubusercontent.com/github/explore/6c6508f34230f0ac0d49e847a326429eefbfc030/topics/css/css.png
+  - name: Mobile AI
+    image_url: https://www.webassetscdn.com/avira/prod-blog/wp-content/uploads/2019/03/ai-smartphone.jpg
 
-  - name: Web design
+  - name: Badminton
+    image_url: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkmzi5m44O048ObOMqIE5yfVkyy6kzscoWwQ&usqp=CAU
 
-  - name: Sass
-    web_url: https://github.com/topics/sass
-    image_url: https://raw.githubusercontent.com/github/explore/6c6508f34230f0ac0d49e847a326429eefbfc030/topics/sass/sass.png
+  - name: Machine Learning
+    image_url: https://miro.medium.com/v2/resize:fit:1024/1*k5LiTi5lt_ND02kaBT_SAA.jpeg
+
+  - name: Travel
+    image_url: https://res.cloudinary.com/enchanting/q_70,f_auto,w_800,h_500,c_fill,g_face/hj-web/2022/08/hawaii-oahu-island.png

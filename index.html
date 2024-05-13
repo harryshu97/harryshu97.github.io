@@ -1,3 +1,56 @@
 ---
 layout: home
 ---
+
+<!-- 
+<a href="http://localhost:4000/me" title="Learn more about me" target="_blank">About Me</a>
+<br>
+<a href="http://localhost:4000/papers" title="Learn more about me" target="_blank">Paper List</a> -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Links</title>
+    <style>
+        /* Style for general links */
+        a {
+            color: #0066cc; /* Sets the text color */
+            text-decoration: none; /* Removes underline */
+            font-weight: bold; /* Makes the font bold */
+        }
+        
+        /* Hover effect for links */
+        a:hover {
+            color: #ff6600; /* Changes color on hover */
+            text-decoration: underline; /* Adds underline on hover */
+        }
+
+        /* Specific style for the 'About Me' link */
+        a.about-me {
+            color: #008000; /* Green color for the 'About Me' link */
+            font-style: italic; /* Italicizes the 'About Me' link */
+        }
+
+        /* Specific style for the 'Paper List' link */
+        a.paper-list {
+            color: #EA6209; /* Red color for the 'Paper List' link */
+            font-size: 16px; /* Sets font size */
+        }
+
+        /* Specific style for the 'tools' link */
+        a.tools {
+            color: #09EA65; /* Red color for the 'Paper List' link */
+            font-size: 16px; /* Sets font size */
+        }
+    </style>
+</head>
+<body>
+    <h1>Useful Links</h1>
+    <p>
+        <a href="http://localhost:4000/me" title="Learn more about me" target="_blank" class="about-me">About Me</a>
+        <br>
+        <a href="http://localhost:4000/papers" title="papers" target="_blank" class="paper-list">Paper List</a>
+        <br>
+        <a href="http://localhost:4000/tools" title="tools" target="_blank" class="tools">Tools</a>
+    </p>
+</body>
