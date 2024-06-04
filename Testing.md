@@ -2,12 +2,12 @@
 layout: default
 title: Testing Tutorial
 ---
-# TVM run model tutorial
-https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py
-https://tvm.apache.org/docs/how_to/deploy/adreno.html
+# TVM run model tutorial<br>
+https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py 
+https://tvm.apache.org/docs/how_to/deploy/adreno.html 
 ## Build 
-- https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py
-- https://tvm.apache.org/docs/how_to/deploy/adreno.html
+- https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py 
+- https://tvm.apache.org/docs/how_to/deploy/adreno.html 
 
 ```
 ./docker/build.sh ci_adreno

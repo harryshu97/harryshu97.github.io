@@ -6,6 +6,9 @@ plugins:
   - jekyll-github-metadata
   - jemoji
 
+kramdown:
+  hard_wrap: true
+  
 permalink: /:year/:month/:day/:title/
 
 defaults:
