@@ -52,10 +52,13 @@ export ADRENO_OPENCL=/home/newway/opt/Snapdragon/OpenCLML
 
 
 
-https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py <br>
+https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py
+<br>
 
 
-bash <br> <br>
+bash 
+<br>
+<br>
 
 
 
@@ -576,7 +579,8 @@ https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sph
 
 
 https://tvm.apache.org/docs/how_to/compile_models/from_onnx.html
-<br><br>
+<br>
+<br>
 
 # NCNN Tutorial <br>
 
@@ -584,10 +588,12 @@ https://tvm.apache.org/docs/how_to/compile_models/from_onnx.html
 # If you want to enable Vulkan, platform api version >= android-24 is needed <br>
 
 
-https://github.com/Tencent/ncnn/wiki/how-to-build#build-for-android <br>
+https://github.com/Tencent/ncnn/wiki/how-to-build#build-for-android 
+<br>
 <br>
 
-## Build for benchmark <br>
+## Build for benchmark
+<br>
 
 
 
@@ -706,8 +712,10 @@ https://www.tensorflow.org/install/source
 
 https://stackoverflow.com/questions/26333823/clang-doesnt-see-basic-headers
 <br>
+<br>
 
 ## Build
+<br>
 <br>
 
 ### For Android
