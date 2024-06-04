@@ -1,6 +1,6 @@
 ---
 layout: default
-title: testing tools
+title: Testing Tutorial
 ---
 # TVM run model tutorial
 https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py
