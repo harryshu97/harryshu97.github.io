@@ -2,40 +2,53 @@
 layout: default
 title: Testing Tutorial
 ---
-# TVM run model tutorial <br>
+# TVM run model tutorial 
+<br>
 
 
-https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py  <br>
+https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py 
+<br>
 
 
-https://tvm.apache.org/docs/how_to/deploy/adreno.html  <br> <br>
+https://tvm.apache.org/docs/how_to/deploy/adreno.html 
+<br>
+<br>
 
 
-## Build  <br>
+## Build  
+<br>
 
 
-- https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py  <br>
+- https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py  
+<br>
 
 
-- https://tvm.apache.org/docs/how_to/deploy/adreno.html  <br>
-
-
-
-
-./docker/build.sh ci_adreno <br>
-
-
-docker tag tvm.ci_adreno ci_adreno <br>
-
-
-export ADRENO_OPENCL=/home/newway/opt/Snapdragon/OpenCLML <br>
-
-
-./tests/scripts/ci.py adreno -i <br> <br>
+- https://tvm.apache.org/docs/how_to/deploy/adreno.html  
+<br>
 
 
 
-## Run <br>
+
+./docker/build.sh ci_adreno 
+<br>
+
+
+docker tag tvm.ci_adreno ci_adreno
+ <br>
+
+
+export ADRENO_OPENCL=/home/newway/opt/Snapdragon/OpenCLML
+ <br>
+
+
+./tests/scripts/ci.py adreno -i 
+<br> 
+<br>
+
+
+
+## Run 
+<br>
 
 
 
