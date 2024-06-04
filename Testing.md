@@ -2,178 +2,161 @@
 layout: default
 title: Testing Tutorial
 ---
-# TVM run model tutorial
+# TVM run model tutorial <br>
 
 
-https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py 
+https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py  <br>
 
 
-https://tvm.apache.org/docs/how_to/deploy/adreno.html 
+https://tvm.apache.org/docs/how_to/deploy/adreno.html  <br> <br>
 
 
-## Build 
+## Build  <br>
 
 
-- https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py 
+- https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py  <br>
 
 
-- https://tvm.apache.org/docs/how_to/deploy/adreno.html 
+- https://tvm.apache.org/docs/how_to/deploy/adreno.html  <br>
 
 
 
-```
 
+./docker/build.sh ci_adreno <br>
 
-./docker/build.sh ci_adreno
 
+docker tag tvm.ci_adreno ci_adreno <br>
 
-docker tag tvm.ci_adreno ci_adreno
 
+export ADRENO_OPENCL=/home/newway/opt/Snapdragon/OpenCLML <br>
 
-export ADRENO_OPENCL=/home/newway/opt/Snapdragon/OpenCLML
 
+./tests/scripts/ci.py adreno -i <br> <br>
 
-./tests/scripts/ci.py adreno -i
 
 
-```
+## Run <br>
 
 
-## Run
 
+https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py <br>
 
-```
 
+bash <br> <br>
 
-https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py
 
 
-bash
 
 
-```
+## Start container <br>
 
 
-## Start container
 
 
-```
+export ADRENO_OPENCL=/home/newway/opt/Snapdragon/OpenCLML <br>
 
 
-export ADRENO_OPENCL=/home/newway/opt/Snapdragon/OpenCLML
+./tests/scripts/ci.py adreno -i <br> <br>
 
 
-./tests/scripts/ci.py adreno -i
 
+## After the docker is built <br>
 
-```
 
-## After the docker is built
 
+export ANDROID_SERIAL=832358d4 <br>
 
-```
 
+export TVM_HOME=/home/newway/Documents/Research/CNN/TVM/tvm <br>
 
-export ANDROID_SERIAL=832358d4
 
+export PYTHONPATH=$TVM_HOME/python:${PYTHONPATH} <br>
 
-export TVM_HOME=/home/newway/Documents/Research/CNN/TVM/tvm
 
+adb -s $ANDROID_SERIAL shell "mkdir /data/local/tmp/tvm_run" <br>
 
-export PYTHONPATH=$TVM_HOME/python:${PYTHONPATH}
 
+adb -s $ANDROID_SERIAL push {build-adreno-target/libtvm_runtime.so,build-adreno-target/tvm_rpc} /data/local/tmp/tvm_run <br>
 
-adb -s $ANDROID_SERIAL shell "mkdir /data/local/tmp/tvm_run"
 
+find ${ANDROID_NDK_HOME} -name libc++_shared.so <br> <br>
 
-adb -s $ANDROID_SERIAL push {build-adreno-target/libtvm_runtime.so,build-adreno-target/tvm_rpc} /data/local/tmp/tvm_run
 
 
-find ${ANDROID_NDK_HOME} -name libc++_shared.so
+## open a terminal within the docker <br>
 
 
-```
 
 
-## open a terminal within the docker
 
+export ANDROID_SERIAL=832358d4 <br>
 
-```
 
+python3 -m tvm.exec.rpc_tracker --port 9190 <br> <br>
 
-export ANDROID_SERIAL=832358d4
 
 
-python3 -m tvm.exec.rpc_tracker --port 9190
 
 
-```
+## open another terminal out of the docker <br>
 
 
-## open another terminal out of the docker
+export ANDROID_SERIAL=832358d4 <br>
 
 
-```
+adb -s $ANDROID_SERIAL reverse tcp:9190 tcp:9190 <br>
 
 
-export ANDROID_SERIAL=832358d4
+adb -s $ANDROID_SERIAL forward tcp:5000 tcp:5000 <br>
 
 
-adb -s $ANDROID_SERIAL reverse tcp:9190 tcp:9190
+adb -s $ANDROID_SERIAL forward tcp:5002 tcp:5001 <br>
 
 
-adb -s $ANDROID_SERIAL forward tcp:5000 tcp:5000
+adb -s $ANDROID_SERIAL forward tcp:5003 tcp:5002 <br>
 
 
-adb -s $ANDROID_SERIAL forward tcp:5002 tcp:5001
+adb -s $ANDROID_SERIAL forward tcp:5004 tcp:5003 <br>
 
 
-adb -s $ANDROID_SERIAL forward tcp:5003 tcp:5002
+adb -s $ANDROID_SERIAL shell LD_LIBRARY_PATH=/data/local/tmp/tvm_run /data/local/tmp/tvm_run/tvm_rpc server --host=0.0.0.0 --port=5000 --tracker=127.0.0.1:9190 --key=android --port-end=5100 <br> <br>
 
 
-adb -s $ANDROID_SERIAL forward tcp:5004 tcp:5003
 
 
-adb -s $ANDROID_SERIAL shell LD_LIBRARY_PATH=/data/local/tmp/tvm_run /data/local/tmp/tvm_run/tvm_rpc server --host=0.0.0.0 --port=5000 --tracker=127.0.0.1:9190 --key=android --port-end=5100
 
+## open the third terminal within the docker <br>
 
-```
 
 
-## open the third terminal within the docker
 
 
-```
+export TVM_TRACKER_HOST=0.0.0.0 <br>
 
 
-export TVM_TRACKER_HOST=0.0.0.0
+export TVM_TRACKER_PORT=9190 <br>
 
 
-export TVM_TRACKER_PORT=9190
+python -m tvm.exec.query_rpc_tracker --port 9190 <br>
 
 
-python -m tvm.exec.query_rpc_tracker --port 9190
+export TVM_NDK_CC=/opt/android-sdk-linux/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android31-clang++ <br>
 
 
-export TVM_NDK_CC=/opt/android-sdk-linux/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android31-clang++
+python ./run_opencl.py <br> <br>
 
 
-python ./run_opencl.py
 
+## TVM run_opencl.py file <br>
 
-```
 
 
-## TVM run_opencl.py file
 
 
-```
+# https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py <br>
 
 
-# https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sphx-glr-how-to-deploy-models-deploy-model-on-adreno-py
-
-
-# https://tvm.apache.org/docs/how_to/compile_models/from_onnx.html
+# https://tvm.apache.org/docs/how_to/compile_models/from_onnx.html <br>
 
 
 import os <br>
@@ -531,26 +514,26 @@ tuning_trail = 64 # 128 <br>
 
 
 # profile_onnx_model("/home/harry/Documents/tvm/models/vit-base.onnx", input_name="input", input_shape=[1, 3, 224, 224], is_tuning=is_tuning, tuning_trail=tuning_trail) # work
-
+<br>
 
 # profile_onnx_model("/home/harry/Documents/tvm/models/vit-small.onnx", input_name="input", input_shape=[1, 3, 224, 224], is_tuning=is_tuning, tuning_trail=tuning_trail) # work
-
+<br>
 
 # profile_onnx_model("/home/harry/Documents/tvm/models/vit-tiny.onnx", input_name="input", input_shape=[1, 3, 224, 224], is_tuning=is_tuning, tuning_trail=tuning_trail) # work
-
+<br>
 
 # profile_onnx_model("/home/harry/Documents/tvm/models/cp_vit-base.onnx", input_name="input_1", input_shape=[1, 3, 224, 224], is_tuning=is_tuning, tuning_trail=tuning_trail) # work
-
+<br>
 
 # profile_onnx_model("/home/harry/Documents/tvm/models/cp_vit-small.onnx", input_name="input_1", input_shape=[1, 3, 224, 224], is_tuning=is_tuning, tuning_trail=tuning_trail) # work
-
+<br>
 
 # profile_onnx_model("/home/harry/Documents/tvm/models/cp_vit-tiny.onnx", input_name="input_1", input_shape=[1, 3, 224, 224], is_tuning=is_tuning, tuning_trail=tuning_trail) # work
-
+<br>
 
 
 # profile_onnx_model("/home/harry/Documents/tvm/models/efficientnet-b0.onnx", input_name="input", input_shape=[1, 3, 224, 224], is_tuning=is_tuning, tuning_trail=tuning_trail) # work
-
+<br>
 
 
 
@@ -558,9 +541,10 @@ tuning_trail = 64 # 128 <br>
 
 # Encoder <br>
 # profile_onnx_model("/home/harry/Documents/tvm/models/model.onnx", input_name="input_ids", input_shape=[1,77], is_tuning=is_tuning, tuning_trail=tuning_trail, dtype="int32") # work
-
+<br>
 
 # profile_onnx_model("/home/harry/Documents/tvm/models/sd32_decoder.onnx", input_name="latent_sample", input_shape=[1, 4, 32, 32], is_tuning=is_tuning, tuning_trail=tuning_trail) # work
+<br>
 
 
 unet_32_input_info = [ <br>
@@ -569,9 +553,9 @@ unet_32_input_info = [ <br>
     ("encoder_hidden_state", [1, 77, 768], "float"), <br>
 ] <br>
 profile_onnx_model_multi_input("/home/harry/Documents/tvm/models/unet32/model.onnx", input_info=unet_32_input_info, is_tuning=is_tuning, tuning_trail=tuning_trail) # work
+<br>
+<br>
 
-
-```
 
 
 ## Useful link <br>
@@ -579,21 +563,20 @@ https://tvm.apache.org/docs/how_to/deploy_models/deploy_model_on_adreno.html#sph
 
 
 https://tvm.apache.org/docs/how_to/compile_models/from_onnx.html
+<br><br>
+
+# NCNN Tutorial <br>
 
 
-# NCNN Tutorial
+# If you want to enable Vulkan, platform api version >= android-24 is needed <br>
 
 
-# If you want to enable Vulkan, platform api version >= android-24 is needed
+https://github.com/Tencent/ncnn/wiki/how-to-build#build-for-android <br>
+<br>
+
+## Build for benchmark <br>
 
 
-https://github.com/Tencent/ncnn/wiki/how-to-build#build-for-android
-
-
-## Build for benchmark
-
-
-```
 
 
 cmake -H. -Bbuild/build_android64                                              \ <br> 
@@ -608,13 +591,10 @@ adb shell "mkdir -p /data/local/tmp/ncnn_run/attention"; <br>
 cmake --build build/build_android64 --parallel 16; <br>
 adb push build/build_android64/benchmark/benchncnn /data/local/tmp/ncnn_run; <br>
 
+<br> <br>
 
-```
+## Build for convert <br>
 
-## Build for convert
-
-
-```
 
 
 cmake -H. -Bbuild/build_amd64                                                  \ <br>
@@ -625,218 +605,204 @@ cmake -H. -Bbuild/build_amd64                                                  \
 cmake --build build/build_amd64 --parallel 16; <br>
 
 
-```
+<br>
 
 
-## Convert model
+## Convert model <br>
 
 
-```
+
 
 
 model_base_name="/home/newway/Documents/Research/DSP/DSPModels/fst/fsts_cutted"; build/build_amd64/tools/onnx/onnx2ncnn $model_base_name.onnx $model_base_name.param $model_base_name.bin
-
+<br>
 
 adb push $model_base_name.param /data/local/tmp/ncnn_run/attention/; adb push $model_base_name.bin /data/local/tmp/ncnn_run/attention/;
-
+<br>
 
 model_base_name="/home/newway/Documents/Research/LargeModel/CV/1.Other/regnet/regnet_y_3_2gf-nomodule-opt"; build/build_amd64/tools/onnx/onnx2ncnn $model_base_name.onnx $model_base_name.param $model_base_name.bin
-
+<br>
 
 adb push $model_base_name.param /data/local/tmp/ncnn_run/attention/; adb push $model_base_name.bin /data/local/tmp/ncnn_run/attention/;
-
+<br>
 
 model_base_name="/home/newway/Documents/Research/LargeModel/CV/1.Other/resnext/resnext50_32x4d-nomodule-opt"; build/build_amd64/tools/onnx/onnx2ncnn $model_base_name.onnx $model_base_name.param $model_base_name.bin
-
+<br>
 
 adb push $model_base_name.param /data/local/tmp/ncnn_run/attention/; adb push $model_base_name.bin /data/local/tmp/ncnn_run/attention/;
-
+<br>
 
 model_base_name="/home/newway/Documents/Research/LargeModel/CV/1.Other/convnext/convnext-tiny-nomodule-opt"; build/build_amd64/tools/onnx/onnx2ncnn $model_base_name.onnx $model_base_name.param $model_base_name.bin
-
+<br>
 
 adb push $model_base_name.param /data/local/tmp/ncnn_run/attention/; adb push $model_base_name.bin /data/local/tmp/ncnn_run/attention/;
-
+<br>
 
 model_base_name="/home/newway/Documents/Research/Models/ultralytics/yolov8n"; build/build_amd64/tools/onnx/onnx2ncnn $model_base_name.onnx $model_base_name.param $model_base_name.bin
-
+<br>
 
 adb push $model_base_name.param /data/local/tmp/ncnn_run/attention/; adb push $model_base_name.bin /data/local/tmp/ncnn_run/attention/;
+<br><br>
 
 
-```
 
 
-## Run benchmark
-
-
-```
+## Run benchmark <br>
 
 
 adb shell "/data/local/tmp/ncnn_run/benchncnn 30 4 2 0 0 param=/data/local/tmp/ncnn_run/attention/regnet_y_3_2gf-nomodule-opt.param shape=[224,224,3]";
-
+<br>
 
 adb shell "/data/local/tmp/ncnn_run/benchncnn 30 4 2 0 0 param=/data/local/tmp/ncnn_run/attention/resnext50_32x4d-nomodule-opt.param shape=[224,224,3]";
-
+<br>
 
 adb shell "/data/local/tmp/ncnn_run/benchncnn 30 4 2 0 0 param=/data/local/tmp/ncnn_run/attention/yolov8n.param shape=[640,640,3]";
+<br>
 
 <!-- LayerNorm does not support -->
-
+<br>
 
 adb shell "/data/local/tmp/ncnn_run/benchncnn 30 4 2 0 0 param=/data/local/tmp/ncnn_run/attention/convnext-tiny-nomodule-opt.param shape=[224,224,3]"
-
-
-```
+<br>
+<br>
 
 # TFLite Tutorial
-
+<br>
 
 https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/benchmark
-
+<br>
 
 https://www.tensorflow.org/lite/android/lite_build
-
+<br>
+<br>
 
 # Guidence for setting up a benchmark environment
-
+<br>
 
 https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/benchmark
-
+<br>
 
 https://www.tensorflow.org/lite/android/lite_build
-
+<br>
 
 https://www.tensorflow.org/lite/performance/measurement
-
+<br>
 
 https://www.tensorflow.org/install/source
-
+<br>
 
 https://stackoverflow.com/questions/26333823/clang-doesnt-see-basic-headers
-
+<br>
 
 ## Build
-
+<br>
 
 ### For Android
+<br>
 
-
-```
 
 
 shell
-
+<br>
 
 sudo apt install g++-12
-
+<br><br>
 
 # Make sure Android NDK Version == 25c
-
+<br>
 
 export ANDROID_NDK_HOME=/home/newway/Android/android-ndk-r25c
-
+<br>
 
 ./configure
-
+<br>
 
 bazelisk build -c opt --config=android_arm64 tensorflow/lite/tools/benchmark:benchmark_model
-
+<br>
 
 bazelisk build -c opt --config=android_arm64  //tensorflow/lite/examples/label_image:label_image
-
-
-```
+<br>
+<br>
 
 
 ### For Local
+<br>
 
 
-```
 
 
 - bazelisk build -c opt --config=linux tensorflow/lite/tools/benchmark:benchmark_model
-
+<br>
 
 adb shell "mkdir -p /data/local/tmp/tflite_run/models"
-
+<br>
 
 adb shell /data/local/tmp/tflite_run/benchmark_model --graph=/data/local/tmp/tflite_run/models/convnext_tiny_float.tflite --warmup_runs=5 --num_runs=50 --num_threads=4 
 --use_nnapi=true --nnapi_allow_fp16=false
-
-
-```
+<br>
+<br>
 
 ## Prepare the model and executable
-
+<br>
 
 shell
-
+<br>
 
 # Prepare the models
-
-
-```
+<br>
 
 
 adb shell "mkdir -p /data/local/tmp/tflite_run/models"
-
+<br>
 
 adb push ./bazel-bin/tensorflow/lite/tools/benchmark/benchmark_model /data/local/tmp/tflite_run
-
+<br>
 
 adb push /home/newway/Documents/Research/LargeModel/CV/2.TFLite/models/*.tflite /data/local/tmp/tflite_run/models
+<br>
+<br>
 
-
-```
 
 
 # SWin
+<br>
 
 
-```
 
 
 adb shell /data/local/tmp/tflite_run/benchmark_model --graph=/data/local/tmp/tflite_run/models/swin_tiny_float.tflite --warmup_runs=5 --num_runs=50 --num_threads=4 --use_gpu=true --gpu_experimental_enable_quant=false
-
-
-```
+<br>
+<br>
 
 
 # ConvNext
+<br>
 
 
-```
 
 
 adb shell /data/local/tmp/tflite_run/benchmark_model --graph=/data/local/tmp/tflite_run/models/convnext_tiny_float.tflite --warmup_runs=5 --num_runs=50 --num_threads=4 --use_gpu=true --gpu_experimental_enable_quant=false
-
-
-```
+<br>
+<br>
 
 
 # RegNet: succeed
+<br>
 
-
-```
 
 
 adb shell /data/local/tmp/tflite_run/benchmark_model --graph=/data/local/tmp/tflite_run/models/regnety032_float.tflite --warmup_runs=5 --num_runs=50 --num_threads=4 --use_gpu=true --gpu_experimental_enable_quant=false
-
-
-```
-
+<br>
+<br>
 
 # ResNext50: succeed
+<br>
 
 
-```
 
 
 adb shell /data/local/tmp/tflite_run/benchmark_model --graph=/data/local/tmp/tflite_run/models/resnext50_float.tflite --warmup_runs=5 --num_runs=50 --num_threads=4 --use_gpu=true --gpu_experimental_enable_quant=false
-
+<br>
 
 adb shell /data/local/tmp/tflite_run/benchmark_model --graph=/data/local/tmp/tflite_run/models/resnext101_float.tflite --warmup_runs=5 --num_runs=50 --num_threads=4 --use_gpu=true --gpu_experimental_enable_quant=false
-
-
-```
+<br>
